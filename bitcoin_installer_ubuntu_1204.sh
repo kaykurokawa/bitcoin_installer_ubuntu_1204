@@ -77,14 +77,14 @@ sudo apt-get install libssl-dev -y
 sudo apt-get install libdb4.8-dev -y 
 sudo apt-get install libdb4.8++-dev -y 
 sudo apt-get install libglib2.0-dev -y
-sudo apt-get install libqrencode-dev
+sudo apt-get install libqrencode-dev -y
 
 
 # Install proper QT version
 if [ $qt_compile -eq 4 ]; then
     sudo apt-get install libqt4-dev libprotobuf-dev protobuf-compiler -y 
 else
-    sudo apt-get install libqt5gui5 libqt5core5 libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev
+    sudo apt-get install libqt5gui5 libqt5core5 libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev -y
 fi
 
 if [ $upnp_compile -eq 1 ] ; then
