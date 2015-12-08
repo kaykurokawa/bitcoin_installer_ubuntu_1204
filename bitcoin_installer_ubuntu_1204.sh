@@ -40,7 +40,8 @@ echo "based on instruction :  https://github.com/bitcoin/bitcoin/blob/master/doc
 
 upnp_compile=1 
 qt_compile=4
-while getopts "huq:" opt; do
+git_release_version="none"
+while getopts "huq:c:" opt; do
     case $opt in
         u)
             echo "Compiling without UPNP Support"
@@ -57,6 +58,11 @@ while getopts "huq:" opt; do
                 exit 1
             fi
             ;;
+        c)
+            echo "checking out version: $OPTARG"
+            git_release_version=$OPTARG
+            ;; 
+
         h)
             help 
             exit 1 
@@ -70,7 +76,8 @@ sudo apt-get update
 # Install dependencies
 sudo apt-get install git-core -y
 sudo apt-get install dh-autoreconf -y #needed when running ./autogen.sh
-sudo apt-get install build-essential -y
+sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev bsdmainutils -y
+
 
 sudo apt-get install libboost-all-dev
 sudo apt-get install libssl-dev -y 
@@ -93,7 +100,9 @@ fi
 
 # Grab from Github
 git clone https://github.com/bitcoin/bitcoin.git
-
+if [ "$git_release_version" != "none" ]; then
+    (cd bitcoin; git checkout $git_release_version)
+fi
 # Build
 cd bitcoin 
 ./autogen.sh 
